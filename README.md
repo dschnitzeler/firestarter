@@ -22,6 +22,7 @@ The software package consists of four programs and a library. Please install the
 --- Quick tour ---
 
 The are four core programs:
+
 fs.pro > Fitit: the main fitting program.
 
   Example: Fitit, meas_arr=meas_arr, cmp_arr=1, n_cmp_max=5
