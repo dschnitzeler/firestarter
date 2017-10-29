@@ -44,3 +44,7 @@ I would start with running Fitit and Readit. Use Batch_fitit and Batch_readit if
 More information on how to call the programs and their output can be found at the start of each program. Alternatively, you can type ‘fitit’, ‘batch_fitit’, ‘readit’, or ‘batch_readit’ after compiling each of the core programs.
 
 
+
+--- Request ---
+
+If you find a bug, or even fix a big, please let me know so that I can update this repository. You can contact me at d{insert my surname}(at){name of that e-mail service provided by Google}.com.
