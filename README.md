@@ -39,8 +39,8 @@ batch_readit.pro > Batch_readit: calculates model weights, and model-weighted pa
 
   Example: Batch_readit, test=101
 
-I would start with running Fitit and Readit. Use Batch_fitit and Batch_readit if you want to generate mock observations and apply Fitit to each of these simulations.
+I would start with running Fitit and Readit. Use Batch_fitit and Batch_readit if you want to generate mock observations and apply Fitit to each of these simulations. Information on how to set up your own Monte Carlo simulation can be found in the section ‘How to set up a Monte Carlo simulation’ at the beginning of batch_fitit.pro.
 
 More information on how to call the programs and their output can be found at the start of each program. Alternatively, you can type ‘fitit’, ‘batch_fitit’, ‘readit’, or ‘batch_readit’ after compiling each of the core programs.
 
-Information on how to set up your own Monte Carlo simulation can be found in the section ‘How to set up a Monte Carlo simulation’ at the beginning of batch_fitit.pro.
+
