@@ -29,7 +29,7 @@ fs.pro > Fitit: the main fitting program.
 
 readit.pro > Readit: use this program to interpret the output from fs.pro, and to plot the data and the best-fitting model fit, as selected by the Bayesian Information Criterion.
 
-  Example: Readit, test=101, mc_index=9
+  Example: Readit, meas_arr=meas_arr
 
 batch_fitit.pro > Batch_fitit: calls ‘Fitit’ repeatedly, for example, when running a Monte Carlo simulation.
 
