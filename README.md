@@ -25,19 +25,19 @@ The are four core programs:
 
 fs.pro > Fitit: the main fitting program.
 
-  Example: Fitit, meas_arr=meas_arr, cmp_arr=1, n_cmp_max=5
+  Example: GDL > fitit, meas_arr=meas_arr, cmp_arr=1, n_cmp_max=5
 
 readit.pro > Readit: use this program to interpret the output from fs.pro, and to plot the data and the best-fitting model fit, as selected by the Bayesian Information Criterion.
 
-  Example: Readit, meas_arr=meas_arr
+  Example: GDL > readit, meas_arr=meas_arr
 
 batch_fitit.pro > Batch_fitit: calls ‘Fitit’ repeatedly, for example, when running a Monte Carlo simulation.
 
-  Example: Batch_fitit, test=101
+  Example: GDL > batch_fitit, test=101
 
 batch_readit.pro > Batch_readit: calculates model weights, and model-weighted parameters. Useful when running Monte Carlo simulations.
 
-  Example: Batch_readit, test=101
+  Example: GDL > batch_readit, test=101
 
 I would start with running Fitit and Readit. Use Batch_fitit and Batch_readit if you want to generate mock observations and apply Fitit to each of these simulations. Information on how to set up your own Monte Carlo simulation can be found in the section ‘How to set up a Monte Carlo simulation’ at the beginning of batch_fitit.pro.
 
