@@ -365,6 +365,8 @@
 ;   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;   SOFTWARE.
 
+@./lib/bsort
+@./lib/vsym
 @./lib/fill_string
 @./lib/find_extremum
 @./lib/dsreplicate
@@ -379,6 +381,7 @@
 @./lib/echo
 @./lib/find_plot_range
 @./lib/chisqr_cvf_ds
+@./lib/fit_powerlaw
 
 PRO LOOKUP_MODEL, $
     model_type, type_str=type_str, param_used=param_used, n_param_used=n_param_used, $
