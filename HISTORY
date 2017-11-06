@@ -1,0 +1,6 @@
+This file shows all modifications to the Firestarter program package
+
+Date (dd.mm.yyyy)
+31.10.2017  (DS)  First version released
+06.11.2017  (DS)  Added programs to library (fit_powerlaw.pro, vsym.pro, bsort.pro)
+                  Updated fs.pro > Plotit to fix a problem when plotting coloured, filled circles in IDL 
