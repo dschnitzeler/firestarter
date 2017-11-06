@@ -338,6 +338,7 @@
 ;   HOW TO SET UP A MONTE CARLO SIMULATION
 ;   See batch_fitit.pro.
 ;
+;
 ;   HISTORY
 ;   06.11.2017 (DS) Updated Plotit to fix a problem when plotting coloured, filled circles in IDL
 ;
