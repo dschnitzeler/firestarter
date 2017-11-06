@@ -340,7 +340,16 @@
 ;
 ;
 ;   HISTORY
-;   06.11.2017 (DS) Updated Plotit to fix a problem when plotting coloured, filled circles in IDL
+;   06.11.2017 (DS) Updated Plotit to fix a problem when plotting coloured, filled circles in IDL.
+;                   Fixed a problem that prevented the program from running on IDL v7.0:
+;                   family_tree_grid[0,ii] can be negative (without this being an error), 
+;                   which causes problems in the line of code
+;
+;                     flag_status=family_tree_grid[1,family_tree_grid[0,ii]]          
+;
+;                   The updated version of fs.pro first checks if family_tree_grid[0,ii] is not -1.
+;                   Thanks to Shane O'Sullivan for finding this bug.
+;          
 ;
 ;
 ;   MIT License
@@ -2694,7 +2703,12 @@ PRO FITIT, $  ;'
 ;     Find 'cmp_index', which is the index of the model component you want to fit:
       cmp_index=Find_max_cmp()
       fnc_name_arr=reform(fnc_name_grid[*,ii])
-      flag_status=family_tree_grid[1,family_tree_grid[0,ii]]  ; flag status of the parent model
+      if family_tree_grid[0,ii] ne -1 then $
+;       Look up the flag status of the parent model:
+        flag_status=family_tree_grid[1,family_tree_grid[0,ii]] $
+      else $
+;       In this case there is no parent model, therefore:
+        flag_status=0
       if flag_status ne 0 then begin
         family_tree_grid[1,ii]=flag_status  ; inherit flag status from parent model
         flag_status_inherited=1  
