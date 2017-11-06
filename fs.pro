@@ -338,6 +338,9 @@
 ;   HOW TO SET UP A MONTE CARLO SIMULATION
 ;   See batch_fitit.pro.
 ;
+;   HISTORY
+;   06.11.2017 (DS) Updated Plotit to fix a problem when plotting coloured, filled circles in IDL
+;
 ;
 ;   MIT License
 ;
@@ -632,6 +635,7 @@ PRO LOOKUP_TEST_PARAM, $
 ;   ---- Specify various other parameters ---
     n_mc_runs = 10  ; how many Monte Carlo realisations do you need?
     cmp_arr  = [1,2,3,4,5,6,7,8]  ; which model components do you want to test?
+cmp_arr = 1 ;;
 ;   The maximum number of source components you want to search is
 ;   specified by the parameter n_cmp_max in the 'case' statement below.
     test_str= 'test'+roundoff(test)
@@ -2233,11 +2237,26 @@ PRO PLOTIT, $
       plot, freq_arr, q_res, xr=freq_range, /xs, yr=yr,/ys, /Nodata, $
         xtitle='Frequency (MHz)',ytitle='Stokes Q,U residuals (mJy)', charsize=charsize
       oplot,!x.crange,[0,0],linestyle=style,thick=1*lt_mult
-      vsym,20,/fill
-      oplot, freq_arr, q_res, psym=8, color=80, symsize=symsize
+      if !version.os eq 'linux' then begin
+;       You're running IDL
+        vsym, 20, /fill, color=80
+        oplot, freq_arr, q_res, psym=8, symsize=symsize
+      endif $
+      else begin
+;       You're running GDL
+        vsym,20,/fill
+        oplot, freq_arr, q_res, psym=8, color=80, symsize=symsize
+      endelse
       y_new=reform(transpose([[q_res-noise_q_arr],[q_res+noise_q_arr],[null]]),3*n_chan)
       plots,x_new,y_new,color=80,thick=1*lt_mult
-      oplot, freq_arr, u_res, psym=8, color=245, symsize=symsize
+      if !version.os eq 'linux' then begin
+;       You're running IDL
+        vsym, 20, /fill, color=245
+        oplot, freq_arr, u_res, psym=8, symsize=symsize
+      endif $
+      else $
+;       You're running GDL
+        oplot, freq_arr, u_res, psym=8, color=245, symsize=symsize
       y_new=reform(transpose([[u_res-noise_u_arr],[u_res+noise_u_arr],[null]]),3*n_chan)
       plots,x_new,y_new,color=245,thick=1*lt_mult
 
