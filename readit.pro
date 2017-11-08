@@ -151,6 +151,10 @@
 ;     reduced chi squared up to 199, instead of chi2_red_max (the default).
 ;
 ;
+;   HISTORY
+;   08.11.2017 (DS) Fixed a bug in Sort_models. Thanks to Shane O'Sullivan for spotting this. 
+;
+;
 ;   MIT License
 ;
 ;   Copyright (c) 2017 Dominic H.F.M. Schnitzeler
@@ -357,7 +361,7 @@ PRO SORT_MODELS, $
 
       if n_elements(meas_arr) gt 0 then begin
         dimen=Size(meas_arr,/dim)
-        if dimen[0] eq 6 then begin
+        if dimen[0] eq 7 then begin
 ;         In this case the array 'meas_arr' stores freq - I - err_I - Q - err_Q - U - err_U
           stokes_i_arr=reform(meas_arr[1,*])
           noise_i_arr=reform(meas_arr[2,*])
