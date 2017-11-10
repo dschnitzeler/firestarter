@@ -153,6 +153,8 @@
 ;
 ;   HISTORY
 ;   08.11.2017 (DS) Fixed a bug in Sort_models. Thanks to Shane O'Sullivan for spotting this. 
+;   10.11.2017 (DS) Fixed a bug in Sort_models that produced an error in IDL 7.0.
+;                   Again, thanks to Shane O'Sullivan for spotting this.
 ;
 ;
 ;   MIT License
@@ -284,30 +286,31 @@ PRO SORT_MODELS, $
       cmp_index=0l  ; index for looping over each of the source paramaters
       for ii=0l,n_columns-1 do begin
         sel2=where(param_used_arr[ii,*], n_sel2) 
-        if n_sel2 gt 0 and total(weights_arr[sel2],/double) gt 0 then begin 
-;         Note: the parameter you're averaging can have been
-;         kept fixed at zero for a number of models under
-;         investigation. In model averaging, only include those 
-;         models where this is not the case:
-          weights_arr_sel2_normalized = weights_arr[sel2]/total(weights_arr[sel2],/double)
-;         You don't have to first select only models where
-;         flag_status did not point out an error (i.e., models
-;         selected with 'sel'): models with such errors are assigned 
-;         a weight of zero in weights_arr, see above.
+        if n_sel2 gt 0 then $
+          if total(weights_arr[sel2],/double) gt 0 then begin 
+;           Note: the parameter you're averaging can have been
+;           kept fixed at zero for a number of models under
+;           investigation. In model averaging, only include those 
+;           models where this is not the case:
+            weights_arr_sel2_normalized = weights_arr[sel2]/total(weights_arr[sel2],/double)
+;           You don't have to first select only models where
+;           flag_status did not point out an error (i.e., models
+;           selected with 'sel'): models with such errors are assigned 
+;           a weight of zero in weights_arr, see above.
 
-          param_model_weighted[ii]= total(weights_arr_sel2_normalized*param_arr[ii,sel2],/double)
+            param_model_weighted[ii]= total(weights_arr_sel2_normalized*param_arr[ii,sel2],/double)
 
-          param_err_model_weighted[ii]= $
-            total(weights_arr_sel2_normalized * $
-                  sqrt(param_err_arr[ii,sel2]^2 + (param_arr[ii,sel2]-param_model_weighted[ii])^2), $
-                  /double)
+            param_err_model_weighted[ii]= $
+              total(weights_arr_sel2_normalized * $
+                    sqrt(param_err_arr[ii,sel2]^2 + (param_arr[ii,sel2]-param_model_weighted[ii])^2), $
+                    /double)
 
-;         Report the model-averaged values and their uncertainties:
-          index_tmp= ii mod n_param_max  ; which type of source component has been fitted?
-          if ~keyword_set(silent) then $
-            print,' Component ('+roundoff(fix(ii/n_param_max)+1)+') '+param_names_full[index_tmp]+' : '+ $
-              roundoff(param_model_weighted[ii],2)+' +/- '+roundoff(param_err_model_weighted[ii],2) 
-        endif  ; if n_sel2 gt 0
+;           Report the model-averaged values and their uncertainties:
+            index_tmp= ii mod n_param_max  ; which type of source component has been fitted?
+            if ~keyword_set(silent) then $
+              print,' Component ('+roundoff(fix(ii/n_param_max)+1)+') '+param_names_full[index_tmp]+' : '+ $
+                roundoff(param_model_weighted[ii],2)+' +/- '+roundoff(param_err_model_weighted[ii],2) 
+          endif  ; if total(weights_arr[sel2],/double) gt 0
 ;       Note: if n_sel2 eq 0, meaning that this parameter was not
 ;       fitted in any of the model under consideration, then for this
 ;       parameter the values of both param_model_weighted and
