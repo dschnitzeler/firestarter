@@ -7,3 +7,4 @@ Date (dd.mm.yyyy)
                   Fixed a bug in fs.pro that prevented Fitit from running on IDL v7.0.
                   (more information can be found under 'HISTORY' in the preamble of fs.pro)
 08.11.2017  (DS)  Fixed a bug in readit.pro.
+10.11.2017  (DS)  Id.
