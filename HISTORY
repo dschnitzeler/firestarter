@@ -7,6 +7,6 @@ Date (dd.mm.yyyy)
                   Fixed a bug in fs.pro that prevented Fitit from running on IDL v7.0.
                   (more information can be found under 'HISTORY' in the preamble of fs.pro)
 08.11.2017  (DS)  Fixed a bug in readit.pro.
-10.11.2017  (DS)  Id.
+10.11.2017  (DS)  Id.: this bug prevented the program from running on IDL v7.0.
 16.11.2017  (DS)  Updated fs.pro and lib/fit_powerlaw.pro, so that power law fits to the Stokes I spectrum 
                   are now also limited to a range in spectral index of [-6,3].
