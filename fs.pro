@@ -349,6 +349,9 @@
 ;
 ;                   The updated version of fs.pro first checks if family_tree_grid[0,ii] is not -1.
 ;                   Thanks to Shane O'Sullivan for finding this bug.
+;
+;   16.11.2017 (DS) Updated Plotit so that also spectral indices in the power-law fit to Stokes I 
+;                   are limited to the range [-6,3].
 ;          
 ;
 ;
@@ -648,7 +651,6 @@ PRO LOOKUP_TEST_PARAM, $
 ;   ---- Specify various other parameters ---
     n_mc_runs = 10  ; how many Monte Carlo realisations do you need?
     cmp_arr  = [1,2,3,4,5,6,7,8]  ; which model components do you want to test?
-cmp_arr = 1 ;;
 ;   The maximum number of source components you want to search is
 ;   specified by the parameter n_cmp_max in the 'case' statement below.
     test_str= 'test'+roundoff(test)
@@ -2199,7 +2201,7 @@ PRO PLOTIT, $
       plots,x_new,y_new,thick=1*lt_mult
 
 ;     Fit a power law to the Stokes I data:
-      fit_result=Fit_powerlaw(freq_arr,stokes_i_arr,noise_i_arr,x_ref=freq_ref)
+      fit_result=Fit_powerlaw(freq_arr,stokes_i_arr,noise_i_arr,x_ref=freq_ref,/sp_index)
       stokes_i_ref=fit_result[0] & stokes_i_ref_err=fit_result[1]
       oplot,freq_arr,fit_result[0]*(freq_arr/freq_ref)^fit_result[2],thick=2*lt_mult,color=245
       report_i_param_err=dblarr(8)  
