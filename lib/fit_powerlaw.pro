@@ -28,6 +28,13 @@
 ;          maximum likelihood estimator for the flux density at the
 ;          reference frequency using an analytical expression.
 ;
+;   sp_index: set this keyword if you are fitting a power law to a
+;             spectral energy distribution. This limits the range of
+;             allowed spectral indices to [-6,3], which covers the
+;             spectral indices of all known pulsars and most (all?)
+;             active galactic nuclei (see Lorimer et al. 1995 and
+;             Bates et al. 2013).
+;
 ;   OUTPUT
 ;   The function 'Fit_powerlaw' returns a 2D array, which stores the
 ;   two parameters that describe the power law (flux density at the
@@ -40,6 +47,11 @@
 ;   EXAMPLE
 ;   fit_result=Fit_powerlaw(freq_arr,stokes_i_arr,noise_i_arr)
 ;
+;
+;   HISTORY
+;   16.11.2017 (DS) Updated Fit_powerlaw so that also spectral indices
+;                   in the power-law fit to Stokes I are limited to
+;                   the range [-6,3].                 
 ;
 ;   MIT License
 ;
@@ -68,7 +80,7 @@ FUNCTION POWERLAW, x, p
     return, p[0]*x^p[1]
 END
 
-FUNCTION FIT_POWERLAW, x_arr, y_arr, y_err, x_ref=x_ref, start_point=start_point
+FUNCTION FIT_POWERLAW, x_arr, y_arr, y_err, x_ref=x_ref, start_point=start_point, sp_index=sp_index
     if n_elements(x_ref) eq 0 then x_ref=Median(x_arr,/even,/double)  ; the reference frequency for the power law
     if n_elements(start_point) eq 0 then begin
 ;     If no starting point for the Levenberg-Marquardt algorithm has
@@ -83,8 +95,17 @@ FUNCTION FIT_POWERLAW, x_arr, y_arr, y_err, x_ref=x_ref, start_point=start_point
         total((x_arr/x_ref)^(2*start_point[1])/y_err^2,/double)
     endif
 
+    par_properties= replicate({fixed:0,limited:[0,0],limits:[0D,0D]}, 2)
+    if keyword_set(sp_index) then begin
+;     In this case a power law is fitted to a spectral energy
+;     distribution. Limit the range of allowed values for the 
+;     spectral index to [-6,3]:
+      par_properties[1].limited[0:1]=1
+      par_properties[1].limits=[-6D,3D]
+    endif
+
     x_ratio_arr=(x_arr/x_ref)
-    result=Mpfitfun('Powerlaw', x_ratio_arr, y_arr, y_err, start_point, $
+    result=Mpfitfun('Powerlaw', x_ratio_arr, y_arr, y_err, start_point, parinfo=par_properties, $
                      covar=covar, perror=perror, status=status, errmsg=errmsg, /silent)
     if status le 0 then Message,errmsg
     if status ne 1 then print,'Fit_powerlaw status: '+roundoff(status)
