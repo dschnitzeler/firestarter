@@ -8,3 +8,5 @@ Date (dd.mm.yyyy)
                   (more information can be found under 'HISTORY' in the preamble of fs.pro)
 08.11.2017  (DS)  Fixed a bug in readit.pro.
 10.11.2017  (DS)  Id.
+16.11.2017  (DS)  Updated fs.pro and lib/fit_powerlaw.pro, so that power law fits to the Stokes I spectrum 
+                  are now also limited to a range in spectral index of [-6,3].
